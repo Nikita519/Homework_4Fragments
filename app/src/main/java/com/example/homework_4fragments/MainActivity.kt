@@ -2,17 +2,15 @@ package com.example.homework_4fragments
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.fragment.app.FragmentManager
+import android.util.Log
+import androidx.fragment.app.add
 import androidx.fragment.app.commit
-import com.example.homework_4fragments.FragmentA.Companion.FRAGMENT_A_TAG
-import com.example.homework_4fragments.FragmentB.Companion.FRAGMENT_B_TAG
-import com.example.homework_4fragments.FragmentC.Companion.FRAGMENT_C_TAG
-import com.example.homework_4fragments.FragmentD.Companion.FRAGMENT_D_TAG
+import com.example.homework_4fragments.UserEditFragment.Companion.FRAGMENT_USEREDIT_TAG
+import com.example.homework_4fragments.UsersListFragment.Companion.FRAGMENT_USERSLIST_TAG
 import com.example.homework_4fragments.databinding.ActivityMainBinding
 
-class MainActivity : AppCompatActivity(), FragmentA.FragmentAClickListener,
-FragmentB.FragmentBClickListener, FragmentC.FragmentCClickListener,
-    FragmentD.FragmentDClickListener{
+class MainActivity : AppCompatActivity(), UsersListFragment.EditUserClickListener
+, UserEditFragment.UserEditedListener{
 
     private lateinit var binding: ActivityMainBinding
 
@@ -22,58 +20,24 @@ FragmentB.FragmentBClickListener, FragmentC.FragmentCClickListener,
         setContentView(binding.root)
 
         if (savedInstanceState == null) {
-            with(supportFragmentManager) {
-                commit {
-                   add(R.id.container, FragmentA.newInstance(), FRAGMENT_A_TAG)
-                }
-            }
+            supportFragmentManager
+                .beginTransaction()
+                .add(R.id.container, UsersListFragment.newInstance(), FRAGMENT_USERSLIST_TAG)
+                .commit()
         }
     }
 
-    override fun onNavToBClicked() {
+    override fun onEditUserClicked(user: User) {
         with(supportFragmentManager) {
             commit {
-                replace(R.id.container, FragmentB.newInstance(), FRAGMENT_B_TAG)
-                addToBackStack(FRAGMENT_A_TAG)
+                replace(R.id.container, UserEditFragment.newInstance(user), FRAGMENT_USEREDIT_TAG)
+                addToBackStack(FRAGMENT_USERSLIST_TAG)
             }
         }
     }
 
-    override fun onNavToCClicked(phrase: String) {
-        with(supportFragmentManager) {
-            commit {
-                replace(R.id.container, FragmentC.newInstance(phrase), FRAGMENT_C_TAG)
-                addToBackStack(FRAGMENT_B_TAG)
-            }
-        }
-    }
-
-    override fun onBackToAClicked() {
+    override fun onUserEdited(user: User) {
+        Data.updateUser(user)
         supportFragmentManager.popBackStack()
-    }
-
-    override fun onNavToDClicked() {
-        with(supportFragmentManager) {
-            commit {
-                replace(R.id.container, FragmentD.newInstance(), FRAGMENT_D_TAG)
-                addToBackStack(FRAGMENT_C_TAG)
-            }
-        }
-    }
-
-    override fun onNavBackToAClicked() {
-        with(supportFragmentManager) {
-            commit {
-                popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
-            }
-        }
-    }
-
-    override fun onNavBackToBClicked() {
-        with(supportFragmentManager) {
-            commit {
-                popBackStack(FRAGMENT_B_TAG, FragmentManager.POP_BACK_STACK_INCLUSIVE)
-            }
-        }
     }
 }

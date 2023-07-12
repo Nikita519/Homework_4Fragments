@@ -2,6 +2,7 @@
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.kotlinAndroid)
+    id("kotlin-parcelize")
 }
 
 android {
@@ -49,4 +50,7 @@ dependencies {
     androidTestImplementation(libs.androidx.test.ext.junit)
     androidTestImplementation(libs.espresso.core)
     implementation("androidx.fragment:fragment-ktx:1.5.7")
+    implementation("com.github.javafaker:javafaker:1.0.2")
+    implementation("com.github.bumptech.glide:glide:4.15.1")
+
 }
