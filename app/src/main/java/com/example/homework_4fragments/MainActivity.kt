@@ -11,7 +11,7 @@ import com.example.homework_4fragments.FragmentD.Companion.FRAGMENT_D_TAG
 import com.example.homework_4fragments.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity(), FragmentA.FragmentAClickListener,
-FragmentB.FragmentBClickListener, FragmentC.FragmentCClickListener,
+    FragmentB.FragmentBClickListener, FragmentC.FragmentCClickListener,
     FragmentD.FragmentDClickListener{
 
     private lateinit var binding: ActivityMainBinding
@@ -22,13 +22,11 @@ FragmentB.FragmentBClickListener, FragmentC.FragmentCClickListener,
         setContentView(binding.root)
 
         if (savedInstanceState == null) {
-            with(supportFragmentManager) {
-                commit {
+            supportFragmentManager.commit {
                    add(R.id.container, FragmentA.newInstance(), FRAGMENT_A_TAG)
                 }
             }
         }
-    }
 
     override fun onNavToBClicked() {
         with(supportFragmentManager) {
@@ -62,18 +60,12 @@ FragmentB.FragmentBClickListener, FragmentC.FragmentCClickListener,
     }
 
     override fun onNavBackToAClicked() {
-        with(supportFragmentManager) {
-            commit {
-                popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
-            }
-        }
+        supportFragmentManager
+            .popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
     }
 
     override fun onNavBackToBClicked() {
-        with(supportFragmentManager) {
-            commit {
-                popBackStack(FRAGMENT_B_TAG, FragmentManager.POP_BACK_STACK_INCLUSIVE)
-            }
-        }
+        supportFragmentManager
+            .popBackStack(FRAGMENT_B_TAG, FragmentManager.POP_BACK_STACK_INCLUSIVE)
     }
 }

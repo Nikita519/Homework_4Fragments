@@ -9,10 +9,6 @@ import com.example.homework_4fragments.databinding.FragmentDBinding
 
 class FragmentD: Fragment() {
 
-    interface FragmentDClickListener {
-        fun onNavBackToBClicked()
-    }
-
     private var _binding: FragmentDBinding? = null
     private val binding
         get() = _binding!!
@@ -21,7 +17,7 @@ class FragmentD: Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentDBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
@@ -34,10 +30,12 @@ class FragmentD: Fragment() {
         }
     }
 
+    interface FragmentDClickListener {
+        fun onNavBackToBClicked()
+    }
+
     companion object {
         const val FRAGMENT_D_TAG = "FRAGMENT_D_TAG"
-
-        @JvmStatic
         fun newInstance() = FragmentD()
     }
 }

@@ -10,11 +10,6 @@ import com.example.homework_4fragments.databinding.FragmentCBinding
 
 class FragmentC: Fragment() {
 
-    interface FragmentCClickListener {
-        fun onNavToDClicked()
-        fun onNavBackToAClicked()
-    }
-
     private var _binding: FragmentCBinding? = null
     private val binding
         get() = _binding!!
@@ -23,7 +18,7 @@ class FragmentC: Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentCBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
@@ -43,12 +38,15 @@ class FragmentC: Fragment() {
         }
     }
 
+    interface FragmentCClickListener {
+        fun onNavToDClicked()
+        fun onNavBackToAClicked()
+    }
+
     companion object {
         const val FRAGMENT_C_TAG = "FRAGMENT_C_TAG"
         private const val PHRASE_EXTRA = "PHRASE_EXTRA"
         private const val ERROR_DEFAULT_TEXT = "Cant get $PHRASE_EXTRA from arguments"
-
-        @JvmStatic
         fun newInstance(phrase: String) = FragmentC().apply {
             arguments = bundleOf(PHRASE_EXTRA to phrase)
         }

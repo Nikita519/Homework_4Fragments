@@ -9,11 +9,6 @@ import com.example.homework_4fragments.databinding.FragmentBBinding
 
 class FragmentB: Fragment() {
 
-    interface FragmentBClickListener {
-        fun onNavToCClicked(phrase: String)
-        fun onBackToAClicked()
-    }
-
     private var _binding: FragmentBBinding? = null
     private val binding
         get() = _binding!!
@@ -22,7 +17,7 @@ class FragmentB: Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentBBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
@@ -30,20 +25,24 @@ class FragmentB: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.buttonToFragmentC.setOnClickListener {
-            (requireActivity() as FragmentBClickListener)
-                .onNavToCClicked(PHRASE_TO_C_FRAGMENT)
+        with(binding) {
+            buttonToFragmentC.setOnClickListener {
+                (requireActivity() as FragmentBClickListener).onNavToCClicked(PHRASE_TO_C_FRAGMENT)
+            }
+            buttonBack.setOnClickListener {
+                (requireActivity() as FragmentBClickListener).onBackToAClicked()
+            }
         }
-        binding.buttonBack.setOnClickListener {
-            (requireActivity() as FragmentBClickListener).onBackToAClicked()
-        }
+    }
+
+    interface FragmentBClickListener {
+        fun onNavToCClicked(phrase: String)
+        fun onBackToAClicked()
     }
 
     companion object {
         const val FRAGMENT_B_TAG = "FRAGMENT_B_TAG"
         const val PHRASE_TO_C_FRAGMENT = "Hello from FragmentB"
-
-        @JvmStatic
         fun newInstance() = FragmentB()
     }
 }
