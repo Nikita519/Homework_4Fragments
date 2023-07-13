@@ -11,10 +11,10 @@ import com.example.homework_4fragments.databinding.FragmentUsersListBinding
 
 class UsersListFragment: Fragment(), UsersAdapter.OnListItemClickListener {
 
-    private lateinit var usersAdapter: UsersAdapter
     private var _binding: FragmentUsersListBinding? = null
     private val binding
         get() = _binding!!
+    private lateinit var usersAdapter: UsersAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,12 +38,12 @@ class UsersListFragment: Fragment(), UsersAdapter.OnListItemClickListener {
         }
     }
 
-    interface EditUserClickListener {
-        fun onEditUserClicked(user: User)
-    }
-
     override fun onItemClicked(user: User) {
         (requireActivity() as EditUserClickListener).onEditUserClicked(user)
+    }
+
+    interface EditUserClickListener {
+        fun onEditUserClicked(user: User)
     }
 
     companion object {

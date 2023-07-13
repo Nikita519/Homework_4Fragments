@@ -67,9 +67,4 @@ class UserEditFragment: Fragment() {
             arguments = bundleOf(USER_EXTRA to user)
         }
     }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
 }

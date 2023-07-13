@@ -35,9 +35,7 @@ class UsersAdapter(
         }
     }
 
-    override fun getItemCount(): Int {
-        return users.size
-    }
+    override fun getItemCount(): Int = users.size
 
     interface OnListItemClickListener {
         fun onItemClicked(user: User)
